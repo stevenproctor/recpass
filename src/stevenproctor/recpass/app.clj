@@ -1,6 +1,6 @@
 (ns stevenproctor.recpass.app
   (:require
-   [bidi.ring :refer [make-handler]]
+   [bidi.ring :refer [make-handler resources resources-maybe]]
    [clojure.walk :refer [keywordize-keys]]
    [ring.middleware.flash :refer [wrap-flash]]
    [ring.middleware.params :refer [wrap-params]]
@@ -8,7 +8,7 @@
    [stevenproctor.recpass.controllers :as controllers]
    [stevenproctor.recpass.giantbomb :as giantbomb]))
 
-(def api-key (System/getenv "GIANTBOMB_API_KEY"))
+(def api-key (System/getenv "GIANT_BOMB_API_KEY"))
 
 (def query-games
   (partial giantbomb/query-games api-key))
@@ -17,6 +17,7 @@
   ["/" {"" controllers/home
         {:request-method :post} {"search" (controllers/search-games query-games)
                                  "checkout" controllers/checkout}
+        "stylesheets" (resources-maybe {:prefix "public/stylesheets"})
         true controllers/not-found}])
 
 (letfn [(keywordize-request-key [request k]
