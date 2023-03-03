@@ -17,4 +17,6 @@
   (jetty!))
 
 (comment
-  (defonce server (jetty! (:join false))))
+  (defonce server (jetty! (:join false)))
+  (.stop server)
+  (.start server))

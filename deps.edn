@@ -18,6 +18,8 @@
                  :sha "f7ef16dc3b8332b0d77bc0274578ad5270fbfedd"}}
    :main-opts ["-m" "cognitect.test-runner"
                "-d" "test"]}
+  :main {:extra-deps {org.clojure/tools.cli {:mvn/version "1.0.214"}}
+         :main-opts ["-m" "stevenproctor.recpass"]}
   :uberjar {:extra-deps {seancorfield/depstar {:mvn/version "1.0.94"}}
             :main-opts ["-m" "hf.depstar.uberjar" "recpass.jar"
                         "-C" "-m" "stevenproctor.recpass"]}}}

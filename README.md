@@ -8,15 +8,23 @@ Download from https://github.com/stevenproctor/recpass.
 
 ## Usage
 
-FIXME: explanation
+This application Requires a GiantBomb API key.
+
+![Giant Bomb](https://upload.wikimedia.org/wikipedia/en/4/4b/Giant_Bomb_logo.png)
+
+You can get started by signing up for an API key [here](https://www.giantbomb.com/api/).
+
+Once you're logged in, go back to the [API page](https://www.giantbomb.com/api/) to access your key.
+
+The key is provided by an Environment Variable `GIANT_BOMB_API_KEY` that is used by the server.
 
 Run the project directly:
 
     $ clojure -m stevenproctor.recpass
 
-Run the project's tests (they'll fail until you edit them):
+or
 
-    $ clojure -A:test:runner
+    $ make
 
 Build an uberjar:
 
@@ -28,19 +36,8 @@ Run that uberjar:
 
 ## Options
 
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
+    -p, --port PORT  3456  Port number
+    -h, --help
 
 ## License
 
