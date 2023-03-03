@@ -13,9 +13,13 @@
 (def query-games
   (partial giantbomb/query-games api-key))
 
+(def games-by-ids
+  (partial giantbomb/games-by-ids api-key))
+
 (def routes
   ["/" {"" controllers/home
         {:request-method :post} {"search" (controllers/search-games query-games)
+                                 "cart" (controllers/show-cart games-by-ids)
                                  "checkout" controllers/checkout}
         "stylesheets" (resources-maybe {:prefix "public/stylesheets"})
         true controllers/not-found}])
