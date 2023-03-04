@@ -2,7 +2,8 @@
   (:require
    [cheshire.core :as json]
    [clj-http.client :as http]
-   [clojure.core.async :as async :refer [close! <!! alts!! chan put!]]))
+   [clojure.core.async :as async :refer [close! chan put!]]
+   [stevenproctor.recpass.async-utils :as async-utils]))
 
 (defn parsed-results [resp]
   (-> resp
@@ -63,17 +64,11 @@
   Return the collected values of async fetches to the api
   combined into a single normalized results collection"
   [api-key game-ids]
-  (let [err-chan (chan)
-        results-chan (->> game-ids
-                          (map (partial game-by-id api-key err-chan))
-                          async/merge
-                          (async/reduce conj []))
-        timeout-chan (async/timeout 5000)
-        [res c] (alts!! [results-chan err-chan timeout-chan])]
-    (cond
-      (= c err-chan) (throw res)
-      (= c timeout-chan) (throw (ex-info "request timed out" {}))
-      :else (into [] normalize-results-xf res))))
+  (let [err-chan (chan)]
+    (->> game-ids
+         (map (partial game-by-id api-key err-chan))
+         (async-utils/all err-chan)
+         (into [] normalize-results-xf))))
 
 (defn query-games [api-key game-name]
   (->> game-name
